@@ -54,6 +54,15 @@ def complete_task(request):
         task.save()
         return redirect('/' + task.user.name + '/tasks')
     
+def delete_task(request):
+    if request.method == 'GET':
+        # Extract data from the POST request
+        task_id = request.GET.get('task_id')
+        user = Task.objects.get(id=task_id).user
+        task = Task.objects.get(id=task_id)
+        task.delete()
+        return redirect('/' + user.name + '/tasks')
+    
 def completed_task_count(request):
     days = request.GET.get('days')
     user = request.GET.get('user')
