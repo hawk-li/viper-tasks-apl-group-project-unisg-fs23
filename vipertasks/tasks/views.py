@@ -21,7 +21,7 @@ def IndexView(request, user_name):
 
     template_name = 'tasks/tasklist.html'
     context_object_name = 'task_list'
-    queryset = Task.objects.filter(user=user.id)
+    queryset = Task.objects.filter(user=user.id).order_by('date_due')
 
     return render(request, template_name, {'task_list': queryset})
 

@@ -53,6 +53,7 @@
                         <h2>{{ task.name }}</h2>
                         <p>{{ task.description }}</p>
                         <p>{{ task.date_due }}</p>
+                        <p>Is overdue: {{ task.is_overdue }}</p>
                         <!-- button to complete task -->
                         <form action="/task/complete" method="post">
                             <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
@@ -106,7 +107,7 @@
                     <input type="text" id="description" name="description" required>
 
                     <label for="due_date">Due Date:</label>
-                    <input type="date" id="due_date" name="due_date" required>
+                    <input type="datetime-local" id="due_date" name="due_date" required>
 
                     <input type="hidden" id="completed" name="completed" value="False">
 
