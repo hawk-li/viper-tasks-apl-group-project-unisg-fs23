@@ -8,12 +8,13 @@ class Task(models.Model):
     date_due = models.DateTimeField('date due', null=True)
     date_completed = models.DateTimeField('date completed', null=True)
     completed = models.BooleanField(default=False)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     def __str__(self):
         return self.name
     
 class User(models.Model):
     name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
+    email = models.CharField(max_length=200, null=True, default="def")
     def __str__(self):
         return self.name
 
