@@ -1,7 +1,7 @@
 import datetime
 from django.shortcuts import redirect, render
 from django.views import generic
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from .models import Task, User
 
@@ -53,4 +53,21 @@ def complete_task(request):
         task.date_completed = datetime.datetime.now()
         task.save()
         return redirect('/' + task.user.name + '/tasks')
+    
+def completed_task_count(request):
+    days = request.GET.get('days')
+    user = request.GET.get('user')
+    user = User.objects.get(name=user)
+    
+    today = datetime.datetime.now()
+    date_threshold = today - datetime.timedelta(days=int(days))
+
+    completed_count = Task.objects.filter(completed=True, date_completed__gte=date_threshold).count()
+
+    response_data = {
+        'completed_count': completed_count,
+        'days': days
+    }
+    
+    return JsonResponse(response_data)
     
