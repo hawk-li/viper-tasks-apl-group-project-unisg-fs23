@@ -1,9 +1,9 @@
 <!-- display all tasks in queryset -->
 {% for task in task_list.all %}
     <div class="task">
-        <h2>{{ task.title }}</h2>
+        <h2>{{ task.name }}</h2>
         <p>{{ task.description }}</p>
-        <p>{{ task.due_date }}</p>
+        <p>{{ task.date_due }}</p>
         <p>{{ task.completed }}</p>
     </div>
 {% endfor %}
@@ -23,4 +23,15 @@
     <label for="completed">Completed:</label>
     <input type="checkbox" id="completed" name="completed">
 
+    <input type="hidden" id="user" name="user" value="">
+
     <button type="submit">Add Task</button>
+</form>
+    <!-- populate hidden input from url /<user/task -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var user = window.location.pathname.split('/')[1];
+            document.getElementById('user').value = user;
+            console.log(user);
+        });
+    </script>

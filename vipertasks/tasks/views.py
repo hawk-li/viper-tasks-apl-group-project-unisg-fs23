@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.http import HttpResponse
 
@@ -10,27 +10,39 @@ def index(request):
     # return template from tasks/index.html
     return render(request, 'tasks/index.html')
 
-def IndexView(request):
+def IndexView(request, user_name):
     # extract user name from url
     user_name = request.path.split('/')[1]
     # get or create user
-    user = User.objects.get_or_create(name=user_name)
+    user, created = User.objects.get_or_create(name=user_name)
+    # get user id
+
 
     template_name = 'tasks/tasklist.html'
     context_object_name = 'task_list'
-    queryset = Task.objects.filter(user=user)
+    queryset = Task.objects.filter(user=user.id)
 
-# accept post request to create new task
+    return render(request, template_name, {'task_list': queryset})
+
 def add_task(request):
-    # get data from request
-    name = request.POST['name']
-    description = request.POST['description']
-    date_due = request.POST['date_due']
-    completed = request.POST['completed']
-    # create new task
-    new_task = Task(name=name, description=description, date_due=date_due, completed=completed)
-    # save task
-    new_task.save()
-    # return http 200
-    return HttpResponse(status=200)
+    if request.method == 'POST':
+        # Extract data from the POST request
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        due_date = request.POST.get('due_date')
+        completed = request.POST.get('completed') == 'on'  # Convert checkbox value to boolean
+        user = request.POST.get('user')
+
+        # Get the user object
+        user = User.objects.get(name=user)
+
+        # Create a new task object
+        task = Task(name=title, description=description, date_due=due_date, completed=completed, user=user)
+        task.save()
+
+        # Redirect to a success page or a task list page
+        return redirect('/' + user.name + '/tasks')
+
+    # Render the add task form if it's a GET request
+    #return render(request, 'add_task.html')
     
