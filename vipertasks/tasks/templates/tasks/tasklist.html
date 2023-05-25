@@ -17,6 +17,24 @@
                 document.getElementById(tabName).style.display = "block";
                 evt.currentTarget.className += " active";
             }
+
+            function openModal() {
+                var modal = document.getElementById("addTaskModal");
+                modal.style.display = "block";
+            }
+
+            function closeModal() {
+                var modal = document.getElementById("addTaskModal");
+                modal.style.display = "none";
+            }
+
+            // Close the modal when the user clicks outside of it
+            window.onclick = function(event) {
+                var modal = document.getElementById("addTaskModal");
+                if (event.target == modal) {
+                    closeModal();
+                }
+            }
         </script>
     </head>
     <body>
@@ -61,26 +79,35 @@
             {% endfor %}
         </div>
 
-        <!-- form to add a task -->
-        <form action="/task" method="post">
-            {% csrf_token %}
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
+        <!-- Button to open the modal -->
+        <button onclick="openModal()">+</button>
 
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description" required>
+        <!-- The Add Task Modal -->
+        <div id="addTaskModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <!-- Form to add a task -->
+                <form action="/task" method="post">
+                    {% csrf_token %}
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required>
 
-            <label for="due_date">Due Date:</label>
-            <input type="date" id="due_date" name="due_date" required>
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" required>
 
-            <input type="hidden" id="completed" name="completed" value="False">
+                    <label for="due_date">Due Date:</label>
+                    <input type="date" id="due_date" name="due_date" required>
 
-            <input type="hidden" id="user" name="user" value="">
+                    <input type="hidden" id="completed" name="completed" value="False">
 
-            <button type="submit">Add Task</button>
-        </form>
+                    <input type="hidden" id="user" name="user" value="">
 
-        <!-- populate hidden input from url /<user/task -->
+                    <button type="submit">Add Task</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Populate hidden input from url /<user/task -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 var user = window.location.pathname.split('/')[1];
