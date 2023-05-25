@@ -35,7 +35,6 @@
                         <h2>{{ task.name }}</h2>
                         <p>{{ task.description }}</p>
                         <p>{{ task.date_due }}</p>
-                        <p>{{ task.completed }}</p>
                         <!-- button to complete task -->
                         <form action="/task/complete" method="post">
                             <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
@@ -57,7 +56,6 @@
                         <p>{{ task.description }}</p>
                         <p>{{ task.date_due }}</p>
                         <p>{{ task.date_completed }}</p>
-                        <p>{{ task.completed }}</p>
                     </div>
                 {% endif %}
             {% endfor %}
