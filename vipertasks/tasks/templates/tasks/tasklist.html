@@ -3,44 +3,85 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{% static 'tasks/style.css' %}">
+        <script>
+            function openTab(evt, tabName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(tabName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
     </head>
     <body>
-        <!-- display all tasks in queryset -->
-        {% for task in task_list.all %}
-        <div class="task">
-            <h2>{{ task.name }}</h2>
-            <p>{{ task.description }}</p>
-            <p>{{ task.date_due }}</p>
-            <p>{{ task.completed }}</p>
-            <!-- button to complete task -->
-            {% if task.completed == False %}
-                <form action="/task/complete" method="post">
-                    <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
-                    <button type="submit">Complete</button>
-                    {% csrf_token %}
-                </form>
-            {% endif %}
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'OpenTasks')">Open Tasks</button>
+            <button class="tablinks" onclick="openTab(event, 'CompletedTasks')">Completed Tasks</button>
         </div>
-        {% endfor %}
+
+        <!-- Open Tasks Tab -->
+        <div id="OpenTasks" class="tabcontent" style="display: block;">
+            <!-- display all open tasks in queryset -->
+            <!-- check if task list contains any open tasks else display nothing to see here -->
+            {% for task in task_list.all %}
+                {% if task.completed == False %}
+                    <div class="task">
+                        <h2>{{ task.name }}</h2>
+                        <p>{{ task.description }}</p>
+                        <p>{{ task.date_due }}</p>
+                        <p>{{ task.completed }}</p>
+                        <!-- button to complete task -->
+                        <form action="/task/complete" method="post">
+                            <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
+                            <button type="submit">Complete</button>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}         
+        </div>
+
+        <!-- Completed Tasks Tab -->
+        <div id="CompletedTasks" class="tabcontent">
+            <!-- display all completed tasks in queryset -->
+            {% for task in task_list.all %}
+                {% if task.completed == True %}
+                    <div class="task">
+                        <h2>{{ task.name }}</h2>
+                        <p>{{ task.description }}</p>
+                        <p>{{ task.date_due }}</p>
+                        <p>{{ task.date_completed }}</p>
+                        <p>{{ task.completed }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
         <!-- form to add a task -->
         <form action="/task" method="post">
-        {% csrf_token %}
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
 
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required>
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" required>
 
-        <label for="due_date">Due Date:</label>
-        <input type="date" id="due_date" name="due_date" required>
+            <label for="due_date">Due Date:</label>
+            <input type="date" id="due_date" name="due_date" required>
 
-        <input type="hidden" id="completed" name="completed" value="False">
+            <input type="hidden" id="completed" name="completed" value="False">
 
-        <input type="hidden" id="user" name="user" value="">
+            <input type="hidden" id="user" name="user" value="">
 
-        <button type="submit">Add Task</button>
+            <button type="submit">Add Task</button>
         </form>
+
         <!-- populate hidden input from url /<user/task -->
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -51,4 +92,3 @@
         </script>
     </body>
 </html>
-
