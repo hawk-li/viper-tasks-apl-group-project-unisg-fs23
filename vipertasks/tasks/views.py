@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import redirect, render
 from django.views import generic
 from django.http import HttpResponse
@@ -42,7 +43,14 @@ def add_task(request):
 
         # Redirect to a success page or a task list page
         return redirect('/' + user.name + '/tasks')
-
-    # Render the add task form if it's a GET request
-    #return render(request, 'add_task.html')
+    
+def complete_task(request):
+    if request.method == 'POST':
+        # Extract data from the POST request
+        task_id = request.POST.get('task_id')
+        task = Task.objects.get(id=task_id)
+        task.completed = True
+        task.date_completed = datetime.datetime.now()
+        task.save()
+        return redirect('/' + task.user.name + '/tasks')
     
