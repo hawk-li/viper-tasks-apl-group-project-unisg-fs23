@@ -1,9 +1,10 @@
 <!-- tasklist -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
   <title>Task Viewer</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'tasks/style.css' %}">
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var viewTasksButton = document.getElementById('viewTasksButton');
