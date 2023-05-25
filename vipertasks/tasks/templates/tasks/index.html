@@ -1,1 +1,36 @@
 <!-- tasklist -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Viewer</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var viewTasksButton = document.getElementById('viewTasksButton');
+      
+      viewTasksButton.addEventListener('click', function() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        
+        // Here you can process the name and email data
+        
+        // Redirect to the user's tasks page
+        window.location.href = '/' + name + '/tasks';
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Task Viewer</h1>
+  
+  <form>
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    
+    <button type="button" id="viewTasksButton">View Tasks</button>
+  </form>
+</body>
+</html>
