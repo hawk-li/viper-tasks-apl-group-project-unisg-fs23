@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+    # Create a service called web
+    web:
+      # Build an image from the files in the project root directory (Dockerfile)
+      build: .
+      # Assign a name for the container. 
+      container_name: vipertasks
+      ports:
+        - "8000:8000"
+      # run after initial build:
+      # python manage.py makemigrations && python manage.py makemigrations Reddit && python manage.py migrate && 
+      command: >
+        sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:11588 --noreload --nothreading"
+    nginx-reverse:
+      image: nginx:latest
+      container_name: nginx-reverse
+      ports:
+        - "80:80"
+      volumes:
+        - ./nginx-conf:/etc/nginx/conf.d
+        - ./nginx-conf/cerbot/conf:/etc/letsencrypt
+        - ./nginx-conf/cerbot/www:/var/www/certbot
+      depends_on:
+        - web
+    certbot:
+      image: certbot/certbot
+      container_name: certbot
+      volumes:
+        - ./nginx-conf/cerbot/conf:/etc/letsencrypt
+        - ./nginx-conf/cerbot/www:/var/www/certbot
+      depends_on:
+        - nginx-reverse
+      command: certonly --webroot --webroot-path=/var/www/certbot --email
