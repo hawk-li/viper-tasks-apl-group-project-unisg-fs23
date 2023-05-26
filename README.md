@@ -4,7 +4,7 @@
 
 The application is deployed at [vipertasks.hawk.li](https://vipertasks.hawk.li)
 
-For a demo account, use the following credentials:
+For a demo account, use the following credentials (no password required):
 
 ```
 Username: demo
