@@ -35,9 +35,9 @@ This is achieved by using the [Chart.js](https://www.chartjs.org/) library, whic
 
 ## Code
 
-The code for the application can be found in the `vipertasks/tasks` directory. The `static` directory contains the static files (e.g. css, javascript, images) and the `templates` directory contains the html templates. The `views.py` file contains the logic for the application, while the `models.py` file contains the models for the application. The `urls.py` file contains the url mappings for the application.
+The code for the application can be found in the `vipertasks/tasks` directory. The `static` directory contains the static files (e.g. css, javascript, images) and the `templates` directory contains the html templates. 
+The app was styled using bootstrap, which is a css framework. The `static` directory also contains the javascript code for the application, which uses chart.js to create charts and AJAX requests to retrieve the data from the backend. The `views.py` file contains the logic for the application, while the `models.py` file contains the models for the application. The `urls.py` file contains the url mappings for the application.
 
-The app was styled using bootstrap, which is a css framework. The styling can be found in the `static` directory. The `static` directory also contains the javascript code for the application, which uses chart.js to create charts and AJAX requests to retrieve the data from the backend.
 
 ## Learnings
 
