@@ -53,16 +53,11 @@ To start the application, run the following commands:
 
 ```
 cd vipertasks
-python manage.py runserver
-```
-
-After running the application for the first time, django automatically creates the database. This means that the application has to be quit once and migrations have to be applied using the command:
-
-```
 python manage.py migrate
 ```
 
-After that, the application can be started again using the command:
+After running the migrations for the first time, django automatically creates the database. 
+After that, the application can be started using the command:
 
 ```
 python manage.py runserver
