@@ -193,8 +193,9 @@ def task_overdue_rate(request):
     return JsonResponse(data)
 
 def task_creation_rate(request):
+    user = User.objects.get(name=request.GET.get('user'))
     # Calculate the count of tasks created per day
-    tasks_created_per_day = Task.objects.annotate(date_created_day=TruncDay('date_created')).values('date_created_day').annotate(count=Count('id')).order_by('date_created_day')
+    tasks_created_per_day = Task.objects.filer(user=user).annotate(date_created_day=TruncDay('date_created')).values('date_created_day').annotate(count=Count('id')).order_by('date_created_day')
 
     labels = []
     data = []
