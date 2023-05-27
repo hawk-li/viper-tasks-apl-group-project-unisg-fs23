@@ -168,8 +168,9 @@ def task_completion_rate(request):
     return JsonResponse(data)
 
 def task_overdue_rate(request):
+    user = User.objects.get(name=request.GET.get('user'))
     # Calculate the total number of tasks
-    total_tasks = Task.objects.count()
+    total_tasks = Task.objects.filter(user=user).count()
     
     # Calculate the number of overdue tasks
     overdue_tasks = Task.objects.filter(completed=False, date_due__lt=timezone.now()).count()
