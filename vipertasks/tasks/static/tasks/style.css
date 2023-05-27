@@ -1,68 +1,66 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #222;
-  color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #222;
 }
 
 .login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #222;
 }
 
 .login-box {
-  width: 300px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  background-color: #333;
+    width: 300px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #333;
 }
 
-.logo {padding-top: 40px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+.logo {
+    padding-top: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #222;
 }
 
 .login-box h2 {
-  margin-bottom: 20px;
-  color: #4CAF50;
+    margin-bottom: 20px;
+    color: #00802f;
 }
 
 .login-box label {
-  font-weight: bold;
-  color: #fff;
+    font-weight: bold;
+    color: #f8f9fa;
 }
 
 .login-box input {
-  margin-bottom: 10px;
-  background-color: #444;
-  color: #fff;
-  border: none;
-  padding: 5px;
+    margin-bottom: 10px;
+    background-color: #444;
+    color: #f8f9fa;
+    border: none;
+    padding: 5px;
 }
 
 .login-box button {
-  width: 100%;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
+    width: 100%;
+    background-color: #00802f;
+    color: #f8f9fa;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .login-box button:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
-  .tab {
+.tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
@@ -96,35 +94,35 @@ body {
 
 /* Additional styles for the modal */
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.4);
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
 }
 
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

@@ -20,7 +20,8 @@ const colorPalette = [
           plugins: {
             legend: {
               labels: {
-                color: '#333333', // Dark gray
+                color: '#fff', // Dark gray
+                fontColor: 'rgb(000, 000, 000)'
               },
             },
           },
@@ -41,19 +42,19 @@ const colorPalette = [
             y: {
               ticks: {
                 stepSize: 1,
-                color: '#333333', // Dark gray
+                color: '#fff', // Dark gray
               },
             },
             x: {
               ticks: {
-                color: '#333333', // Dark gray
+                color: '#fff', // Dark gray
               },
             },
           },
           plugins: {
             legend: {
               labels: {
-                color: '#333333', // Dark gray
+                color: '#fff', // Dark gray
               },
             },
           },
@@ -73,19 +74,19 @@ const colorPalette = [
           scales: {
             y: {
               ticks: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
             x: {
               ticks: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
           },
           plugins: {
             legend: {
               labels: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
           },
@@ -121,12 +122,12 @@ const colorPalette = [
               max: 100,
               ticks: {
                 callback: value => value + '%',
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
             y: {
               ticks: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
           },
@@ -167,12 +168,12 @@ const colorPalette = [
               max: 100,
               ticks: {
                 callback: value => value + '%',
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
             y: {
               ticks: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
           },
@@ -198,19 +199,19 @@ const colorPalette = [
             y: {
               beginAtZero: true,
               ticks: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
             x: {
               ticks: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
           },
           plugins: {
             legend: {
               labels: {
-                color: '#333333', // Dark gray
+                color: '#f8f9fa', // White
               },
             },
           },

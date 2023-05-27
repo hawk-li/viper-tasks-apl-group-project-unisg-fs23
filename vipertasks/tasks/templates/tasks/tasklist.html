@@ -1,164 +1,264 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'tasks/tasklist.css' %}">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            function openTab(evt, tabName) {
-                var i, tabcontent, tablinks;
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                document.getElementById(tabName).style.display = "block";
-                evt.currentTarget.className += " active";
+<head>
+    <link rel="icon" sizes="16x16 24x24 32x32 48x48 64x64" href="{% static 'tasks/favicon.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'tasks/tasklist.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
 
-            function openModal() {
-                var modal = document.getElementById("addTaskModal");
-                modal.style.display = "block";
-            }
+        function openModal() {
+            var modal = document.getElementById("addTaskModal");
+            modal.style.display = "block";
+        }
 
-            function closeModal() {
-                var modal = document.getElementById("addTaskModal");
-                modal.style.display = "none";
-            }
+        function closeModal() {
+            var modal = document.getElementById("addTaskModal");
+            modal.style.display = "none";
+        }
 
-            // Close the modal when the user clicks outside of it
-            window.onclick = function(event) {
-                var modal = document.getElementById("addTaskModal");
-                if (event.target == modal) {
-                    closeModal();
-                }
+        // Close the modal when the user clicks outside of it
+        window.onclick = function (event) {
+            var modal = document.getElementById("addTaskModal");
+            if (event.target == modal) {
+                closeModal();
             }
-        </script>
-    </head>
-    <body>
-        <div class="tab">
-            <button class="tablinks active" onclick="openTab(event, 'OpenTasks')">Open Tasks</button>
-            <button class="tablinks" onclick="openTab(event, 'CompletedTasks')">Completed Tasks</button>
-            <button class="tablinks" onclick="openTab(event, 'Statistics')">Statistics</button>
+        }
+    </script>
+</head>
+<body class="bg-viper-dark text-white">
+<nav class="navbar navbar-expand-lg navbar-dark bg-viper-dark-2 mb-5">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'tasks/logo-with-text.webp' %}" height="30" class="d-inline-block align-top" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" onclick="openTab(event, 'OpenTasks')">Open
+                        Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="openTab(event, 'CompletedTasks')">Completed Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="openTab(event, 'Statistics')">Statistics</a>
+                </li>
+            </ul>
         </div>
+    </div>
+</nav>
 
-        <!-- Open Tasks Tab -->
-        <div id="OpenTasks" class="tabcontent" style="display: block;">
-            <!-- display all open tasks in queryset -->
-            <!-- check if task list contains any open tasks else display nothing to see here -->
+<!-- Open Tasks Tab -->
+<div id="OpenTasks" class="tabcontent" style="display: block;">
+    <!-- display all open tasks in queryset -->
+    <!-- check if task list contains any open tasks else display nothing to see here -->
+    <div class="container">
+        <div class="row">
             {% for task in task_list.all %}
-                {% if task.completed == False %}
-                    <div class="task">
-                        <h2>{{ task.name }}</h2>
-                        <p>{{ task.description }}</p>
-                        <p>{{ task.date_due }}</p>
-                        <p>Is overdue: {{ task.is_overdue }}</p>
-                        <!-- button to complete task -->
-                        <form action="/task/complete" method="post">
-                            <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
-                            <button type="submit">Complete</button>
-                            {% csrf_token %}
-                            <form action="/task/delete" method="delete">
-                                <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
-                                <button type="submit">Delete</button>
-                                {% csrf_token %}
-                            </form>
-                        </form>
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+            {% if task.completed == False %}
+            <div class="col-sm">
 
-        <!-- Completed Tasks Tab -->
-        <div id="CompletedTasks" class="tabcontent">
-            <!-- display all completed tasks in queryset -->
-            {% for task in task_list.all %}
-                {% if task.completed == True %}
-                    <div class="task">
-                        <h2>{{ task.name }}</h2>
-                        <p>{{ task.description }}</p>
-                        <p>{{ task.date_due }}</p>
-                        <p>{{ task.date_completed }}</p>
+                <div class="card text-white bg-viper-dark-2 shadow rounded mb-5" style="width: 30vw">
+                    <div class="card-header d-flex flex-column justify-content-center align-items-center">
+                        <h2 class="text-break">{{ task.name }}</h2>
+                        <span class="badge">
+                                {% if task.is_overdue %}
+                                <svg data-toggle="tooltip" title="Task is overdue!" xmlns="http://www.w3.org/2000/svg"
+                                     width="12" height="12" fill="red" class="bi bi-clock" viewBox="0 0 16 16">
+                                  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                                </svg>{% endif %} {{ task.date_due }}</span>
                     </div>
-                    <form action="/task/delete" method="delete">
+                    <div class="card-body">
+                        <p>{{ task.description }}</p>
+                    </div>
+
+                    <!-- button to complete task -->
+                    <form action="/task/complete" method="post" class="d-flex justify-content-center mb-2">
                         <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
-                        <button type="submit">Delete</button>
+                        <button type="submit" class="btn btn-primary bg-transparent border-success ml-1 mr-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#218838"
+                                 class="bi bi-check" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                            </svg>
+                        </button>
                         {% csrf_token %}
+                        <form action="/task/delete" method="delete">
+                            <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-primary bg-transparent border-danger ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red"
+                                     class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                            </button>
+                            {% csrf_token %}
+                        </form>
                     </form>
-                {% endif %}
+                </div>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
+    </div>
+</div>
 
-        <!-- Statistics Tab -->
-        <div id="Statistics" class="tabcontent">
-            <div class="chart-container">
-                <canvas id="pieChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="lineChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="completionTimeChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="progressChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="overdueRateChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="creationRateChart"></canvas>
-            </div>
+<!-- Completed Tasks Tab -->
+<div id="CompletedTasks" class="tabcontent" style="display: none;">
+    <!-- display all open tasks in queryset -->
+    <!-- check if task list contains any open tasks else display nothing to see here -->
+    <div class="container">
+        <div class="row">
+            {% for task in task_list.all %}
+            {% if task.completed == True %}
+            <div class="col-sm">
 
-            <style>
-                .chart-container {
-                    width: 50%;
-                    margin: 20px auto;
-                }
-            </style>
+                <div class="card text-white bg-viper-dark-2 shadow rounded mb-5" style="width: 30vw">
+                    <div class="card-header d-flex flex-column justify-content-center align-items-center">
+                        <h2>{{ task.name }}</h2>
+                        <span class="badge">
+                                 <i class="bi bi-plus"></i>
+                                 {{ task.date_due }}
+                            </span>
+                        <span class="badge">
+                                <i class="bi bi-check"></i>{{ task.date_completed }}
+                            </span>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ task.description }}</p>
+                    </div>
+
+                    <!-- button to complete task -->
+                    <form action="/task/complete" method="post" class="d-flex justify-content-center mb-2">
+                        {% csrf_token %}
+                        <form action="/task/delete" method="delete">
+                            <input type="hidden" id="task_id" name="task_id" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-primary bg-transparent border-danger ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red"
+                                     class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                                </svg>
+                            </button>
+                            {% csrf_token %}
+                        </form>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
         </div>
+    </div>
+</div>
+
+<!-- Statistics Tab -->
+<div id="Statistics" class="tabcontent" style="display: none">
+    <div class="chart-container bg-viper-dark-2 shadow">
+        <canvas id="pieChart"></canvas>
+    </div>
+    <div class="chart-container bg-viper-dark-2 shadow">
+        <canvas id="lineChart"></canvas>
+    </div>
+    <div class="chart-container bg-viper-dark-2 shadow">
+        <canvas id="completionTimeChart"></canvas>
+    </div>
+    <div class="chart-container bg-viper-dark-2 shadow">
+        <canvas id="progressChart"></canvas>
+    </div>
+    <div class="chart-container bg-viper-dark-2 shadow">
+        <canvas id="overdueRateChart"></canvas>
+    </div>
+    <div class="chart-container bg-viper-dark-2 shadow">
+        <canvas id="creationRateChart"></canvas>
+    </div>
+
+    <style>
+        .chart-container {
+            width: 50%;
+            margin: 20px auto;
+        }
+    </style>
+</div>
 
 
-        <!-- Button to open the modal -->
-        <button onclick="openModal()">+</button>
+<!-- Button to open the modal -->
+<button id="addButton" onclick="openModal()" class="btn btn-primary rounded-circle position-fixed border-0">
+    <span style="font-size: 45px; position: relative; top: -3px;">+</span>
+</button>
 
-        <!-- The Add Task Modal -->
-        <div id="addTaskModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <!-- Form to add a task -->
-                <form action="/task" method="post">
+<!-- The Add Task Modal -->
+
+<div class="modal " id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="Add Task"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-viper-dark-2 shadow">
+            <!-- Form to add a task -->
+            <form action="/task" method="post">
+                <div class="modal-header border-secondary">
+
+                    <h5 class="modal-title" id="exampleModalLabel">Add new task</h5>
+                    <button type="button" onclick="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body border-top-0">
                     {% csrf_token %}
-                    <label for="title">Title:</label>
-                    <input type="text" id="title" name="title" required>
+                    <div class="form-group">
+                        <label for="title" class="col-form-label">Title:</label>
+                        <input type="text" id="title" name="title"
+                               class="form-control bg-viper-dark border-0 text-light" required>
+                    </div>
+                    <label for="description" class="col-form-label">Description:</label>
+                    <textarea id="description" rows=6 name="description"
+                              class="form-control bg-viper-dark border-0 text-light" required></textarea>
 
-                    <label for="description">Description:</label>
-                    <input type="text" id="description" name="description" required>
-
-                    <label for="due_date">Due Date:</label>
-                    <input type="datetime-local" id="due_date" name="due_date" required>
+                    <label for="due_date" class="col-form-label">Due Date:</label>
+                    <input type="datetime-local" id="due_date" name="due_date"
+                           class="form-control bg-viper-dark border-0 text-light" required>
 
                     <input type="hidden" id="completed" name="completed" value="False">
 
                     <input type="hidden" id="user" name="user" value="">
+                    <div class="modal-footer border-top-0">
+                        <button type="submit" class="btn btn-primary">Add Task</button>
+                    </div>
 
-                    <button type="submit">Add Task</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
 
-        <!-- Populate hidden input from url /<user/task -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var user = window.location.pathname.split('/')[1];
-                document.getElementById('user').value = user;
-                console.log(user);
-            });
-        </script>
-        <!-- load chart_create.js from static -->
-        <script src="{% static 'tasks/chart_create.js' %}"></script>
-    </body>
+<!-- Populate hidden input from url /<user/task -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var user = window.location.pathname.split('/')[1];
+        document.getElementById('user').value = user;
+        console.log(user);
+    });
+</script>
+<!-- load chart_create.js from static -->
+<script src="{% static 'tasks/chart_create.js' %}"></script>
+</body>
 </html>
