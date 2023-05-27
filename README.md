@@ -37,8 +37,6 @@ This is achieved by using the [Chart.js](https://www.chartjs.org/) library, whic
 
 During the development of the application, we learned a lot about the django framework and how it works. We also learned how to use the built-in ORM to interact with the database. Overall we were very satisfied with the framework, as it was easy to use and we were able to create a working application in a relatively short amount of time. While we intentionally tried to keep things simple (e.g. no authentication), we were still able to create a working application with a nice user interface. Additionally, we realized how much work can go into a "simple" application if it has to cover all possible use-cases.
 
-Additionally, we also gained more experience in how such an application can be deployed on a webserver. We decided to use docker-compose in combination with nginx as a proxy server for the django application. This allowed us to easily deploy the application on a webserver and also made it easy to add additional services (e.g. a dedicated database) if needed (currently django automatically creates a sqlite database, which is not very scalable).
-
 ## Code
 
 The code for the application can be found in the `vipertasks/tasks` directory. The `static` directory contains the static files (e.g. css, javascript, images) and the `templates` directory contains the html templates. The `views.py` file contains the logic for the application, while the `models.py` file contains the models for the application. The `urls.py` file contains the url mappings for the application.
@@ -71,13 +69,3 @@ python manage.py runserver
 ```
 
 The application is now available at [localhost:8000](http://localhost:8000).
-
-## Server setup
-
-To deploy the application on a webserver, we decided to use docker-compose in combination with nginx as proxy server for the django application. The docker-compose file can be found in the root directory of the project. To deploy the application, the following steps have to be performed:
-
-1. Clone the repository on the server
-2. Install docker and docker-compose
-3. Modify the files in the `/nginx-conf` directory to match the domain name of the server (init-letsencrypt.sh and nginx.conf)
-4. Run the file `/nginx-conf/init-letsencrypt.sh` with elevated permissions to create the required certificates
-5. Run `docker-compose up -d` in the root directory of the project to start the application. This will download the required images and build the application.
