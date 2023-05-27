@@ -33,6 +33,29 @@ In addition, we created a little dashboard, where we visualize various statistic
 
 This is achieved by using the [Chart.js](https://www.chartjs.org/) library, which is a javascript library for creating charts. The data is retrieved from the backend using AJAX requests.
 
+Sample screenshots are shown below:
+
+Login:
+
+![login.PNG](img/login.PNG)
+
+List of open tasks:
+
+![open_tasks.PNG](img/open_tasks.PNG)
+
+Adding a task:
+
+![add_task.PNG](img/add_task.PNG)
+
+
+Creation date statistics:
+
+![creation_rate.PNG](img/creation_rate.PNG)
+
+Completions per day:
+
+![tasks_completed_per_day.PNG](img/tasks_completed_per_day.PNG)
+
 ## Code
 
 The code for the application can be found in the `vipertasks/tasks` directory. The `static` directory contains the static files (e.g. css, javascript, images) and the `templates` directory contains the html templates. 
