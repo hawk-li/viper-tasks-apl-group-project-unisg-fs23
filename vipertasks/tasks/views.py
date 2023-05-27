@@ -140,7 +140,7 @@ def task_completion_time(request):
         'labels': ['Task Completion Time'],
         'datasets': [{
             'label': 'Average Task Completion Time (hours)',
-            'data': average_completion_time,
+            'data': [average_completion_time],
             'backgroundColor': '#36A2EB'
         }]
     }
