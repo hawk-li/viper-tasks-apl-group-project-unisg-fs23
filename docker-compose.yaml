@@ -8,6 +8,6 @@ services:
       # Assign a name for the container. 
       container_name: vipertasks
       ports:
-        - "8000:80"
+        - "80:8000"
       command: >
         sh -c "python vipertasks/manage.py migrate && python vipertasks/manage.py runserver 0.0.0.0:8000 --noreload --nothreading"
