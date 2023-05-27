@@ -37,6 +37,8 @@ This is achieved by using the [Chart.js](https://www.chartjs.org/) library, whic
 
 The code for the application can be found in the `vipertasks/tasks` directory. The `static` directory contains the static files (e.g. css, javascript, images) and the `templates` directory contains the html templates. The `views.py` file contains the logic for the application, while the `models.py` file contains the models for the application. The `urls.py` file contains the url mappings for the application.
 
+The app was styled using bootstrap, which is a css framework. The styling can be found in the `static` directory. The `static` directory also contains the javascript code for the application, which uses chart.js to create charts and AJAX requests to retrieve the data from the backend.
+
 ## Learnings
 
 During the development of the application, we learned a lot about the django framework and how it works. We also learned how to use the built-in ORM to interact with the database. Overall we were very satisfied with the framework, as it was easy to use and we were able to create a working application in a relatively short amount of time. While we intentionally tried to keep things simple (e.g. no authentication), we were still able to create a working application with a nice user interface. Additionally, we realized how much work can go into a "simple" application if it has to cover all possible use-cases. We were really impressed by django's built-in features, such as the admin interface and how relatively easy it was to query the database to create the statistics.
