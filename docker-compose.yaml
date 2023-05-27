@@ -11,3 +11,5 @@ services:
         - "80:8000"
       command: >
         sh -c "python vipertasks/manage.py migrate && python vipertasks/manage.py runserver 0.0.0.0:8000 --noreload --nothreading"
+      volumes:
+        - db.sqlite3:/app/vipertasks/db.sqlite3
