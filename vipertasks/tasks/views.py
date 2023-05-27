@@ -132,12 +132,15 @@ def task_completion_time(request):
     tasks = Task.objects.filter(completed=True, user=user).exclude(date_completed__isnull=True)
     completion_times = [(task.date_completed - task.date_created).total_seconds() / 3600 for task in tasks]
 
+    # Calculate the average task completion time
+    average_completion_time = sum(completion_times) / len(completion_times) if len(completion_times) > 0 else 0
+
     # Create the data dictionary for the JSON response
     data = {
         'labels': ['Task Completion Time'],
         'datasets': [{
             'label': 'Average Task Completion Time (hours)',
-            'data': completion_times,
+            'data': average_completion_time,
             'backgroundColor': '#36A2EB'
         }]
     }
