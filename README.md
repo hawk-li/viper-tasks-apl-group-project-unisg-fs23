@@ -1,18 +1,5 @@
 # Viper Tasks (Group Project)
 
-## Demo
-
-The application is deployed at [vipertasks.hawk.li](http://vipertasks.hawk.li) (HTTP only)
-
-For a demo account, use the following credentials (no password required):
-
-```
-Username: demo
-EMail: demo@demo.com
-```
-
-Instructions for running the application locally can be found in the deployment section below.
-
 ## Introduction
 
 For our group project, we decided to try a python framework, that could manage a webapplication including persisting data but was still easy to use. We decided to try out [Django](https://www.djangoproject.com/), which is a python framework for web applications. Django is a Model-View-Controller (MVC) framework, which means that the application is split into three parts: The model, which is responsible for the data, the view, which is responsible for the user interface and the controller, which is responsible for the logic. Django also includes a built-in Object-Relational-Mapper (ORM), which means that the application does not have to interact with the database directly, but can use python objects instead. Django also includes a built-in webserver, which makes it easy to run and test the application locally.
